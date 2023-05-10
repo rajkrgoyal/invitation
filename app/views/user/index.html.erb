@@ -1,0 +1,59 @@
+<h1>Welcome to the Dashboard</h1>
+
+<p>You are signed in as <%= current_user.email %></p>
+
+<% if flash[:notice] %>
+  <div class="alert alert-success"><%= flash[:notice] %></div>
+<% end %>
+
+<% if flash[:error] %>
+  <div class="alert alert-danger"><%= flash[:error] %></div>
+<% end %>
+
+
+<% if current_user.admin? %>
+  <h2>All Referrals</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% current_user.referrals.each do |referral| %>
+        <tr>
+          <td><%= referral.email %></td>
+          <td><%= referral.status&.capitalize %></td>
+          <td>
+            <% if referral.pending? %>
+              <% if referral.resend_count >= 5 %>
+                <div style="color: red;">
+                  <%= 'Limit Exceeds of 5' %>
+                </div>           
+              <% else %>
+                <%= button_to "Resend Invitation", resend_referral_path(referral), method: :put, class: "btn btn-primary" %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h2>Invite New</h2>
+  <%= form_with url: referrals_path, method: :post do |f| %>
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+    <%= f.submit "Send Referral" %>
+  <% end %>
+<% else %>
+ <div>
+    <p><strong>First Name:</strong> <%= current_user.first_name %></p>
+    <p><strong>Last Name:</strong> <%= current_user.last_name %></p>
+    <p><strong>Email:</strong> <%= current_user.email %></p>
+    <p><strong>Referred_by:</strong> <%= Referral.find_by(email: current_user.email, status: :accepted)&.user&.email %> </p>
+  </div>
+<% end %>
+
