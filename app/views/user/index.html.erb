@@ -53,7 +53,7 @@
     <p><strong>First Name:</strong> <%= current_user.first_name %></p>
     <p><strong>Last Name:</strong> <%= current_user.last_name %></p>
     <p><strong>Email:</strong> <%= current_user.email %></p>
-    <p><strong>Referred_by:</strong> <%= Referral.find_by(email: current_user.email, status: :accepted)&.user&.email %> </p>
+    <p><strong>Referred_by:</strong> <%= Referral.find_by(email: current_user.email, status: :accepted)&.user&.email || 'None' %> </p>
   </div>
 <% end %>
 
