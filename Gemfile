@@ -75,3 +75,7 @@ end
 gem 'mysql2'
 
 gem 'devise'
+
+gem 'bootstrap', '~> 5.3.0.alpha3'
+gem 'jquery-rails'
+gem 'popper_js', '~> 2.11.7'
