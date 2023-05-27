@@ -1,24 +1,17 @@
-# README
+# INVITATION
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Local Setup
 
-Things you may want to cover:
+**Step 1:** In your terminal navigate to the INVITATION project directory 
 
-* Ruby version
+Setup Ruby version 3.0.1
 
-* System dependencies
+**Step 2:** Run the following command:
 
-* Configuration
+`./bin/setup`
 
-* Database creation
+**Step 3:** Login credentials for admin:
 
-* Database initialization
+email: admin@example.com
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+password: password
