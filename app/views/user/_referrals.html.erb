@@ -1,0 +1,38 @@
+<% if current_user.referrals.size > 0 %>
+<h2>All Referrals</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% current_user.referrals.each do |referral| %>
+      <tr>
+        <td><%= referral.email %></td>
+        <td><%= referral.status&.capitalize %></td>
+        <td>
+          <% if referral.pending? %>
+            <% if referral.resend_count >= 5 %>
+              <div style="color: red;">
+                <%= 'Limit Exceeds of 5' %>
+              </div>
+            <% else %>
+              <%= button_to "Resend Invitation", resend_referral_path(referral), method: :put, class: "btn btn-primary" %>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
+<h2>Invite New</h2>
+<%= form_with url: referrals_path, method: :post do |f| %>
+  <%= f.label :email %>
+  <%= f.email_field :email %>
+  <%= f.submit "Send Referral" %>
+<% end %>
